@@ -30,7 +30,7 @@ const projects: Project[] = [
     category: "Brand Redesign",
     thumb: "/images/thumbnail_gelateria_la_carraia.jpg",
     intro:
-      "A contemporary brand redesign for the historic Florentine gelato shop, balancing modern minimalism with traditional Italian heritage.",
+      "A contemporary brand redesign for the historic Florentine gelato shop.",
     visuals: [
       "/images/gelateria/gelateria-carraia-hero.jpg",
       "/images/gelateria/gelateria-carraia-original-brand.jpg",
@@ -44,7 +44,7 @@ const projects: Project[] = [
     category: "Brand Identity & Creative Direction",
     thumb: "/images/thumbnail_forge_fusion_studios.jpg",
     intro:
-      "A creative advertising agency identity designed to represent innovation, collaboration, and bold visual storytelling across campaigns, digital platforms, and brand assets.",
+      "A creative advertising agency identity designed to represent innovation and bold visual storytelling.",
     visuals: [
       "/images/forge-fusion/forge-fusion-hero.jpg",
       "/images/forge-fusion/forge-fusion-logo.jpg",
@@ -58,7 +58,7 @@ const projects: Project[] = [
     category: "Lifestyle Brand Concept",
     thumb: "/images/thumbnail_hourglass.jpg",
     intro:
-      "A minimalist lifestyle brand concept built around reducing everyday decision fatigue through timeless design, neutral aesthetics, and versatile products.",
+      "A minimalist lifestyle brand concept built around reducing everyday decision fatigue.",
     visuals: [
       "/images/hourglass/hourglass-hero.jpg",
       "/images/hourglass/hourglass-brand-essence.jpg",
@@ -73,7 +73,7 @@ const projects: Project[] = [
     category: "Product Design & UX Concept",
     thumb: "/images/thumbnail_rpg_productivity_system.jpg",
     intro:
-      "A gamified habit-building app concept that turns real-world tasks into an RPG-style progression system with XP, levels, streaks, and rewards.",
+      "A gamified habit-building app concept that turns real-world tasks into an RPG-style progression system.",
     visuals: [
       "/images/gamification/gamification-hero.jpg",
       "/images/gamification/gamification-objective.jpg",
@@ -88,7 +88,7 @@ const projects: Project[] = [
     category: "Illustration Series",
     thumb: "/images/thumbnail_midnight_creatures.jpg",
     intro:
-      "A personal illustration series exploring stylized nocturnal worlds through layered landscapes, character design, and atmospheric color palettes.",
+      "A personal illustration series exploring stylized nocturnal worlds.",
     visuals: [
       "/images/midnight-creatures/midnight-creatures-hero.jpg",
       "/images/midnight-creatures/midnight-creatures-astro-slime.jpg",
@@ -118,12 +118,14 @@ const navItems = [
 
 export default function MustafaNaweedPortfolio() {
   const [activeSection, setActiveSection] = useState("home");
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   useEffect(() => {
     const previous = document.documentElement.style.scrollBehavior;
     document.documentElement.style.scrollBehavior = "smooth";
 
     const sectionIds = ["home", "work", "about", "contact", ...projects.map((p) => slugify(p.title))];
+
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
@@ -159,11 +161,25 @@ export default function MustafaNaweedPortfolio() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
+
+      {lightboxImage && (
+        <div
+          onClick={() => setLightboxImage(null)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-6"
+        >
+          <img
+            src={lightboxImage}
+            className="max-h-[90vh] max-w-[95vw] object-contain"
+          />
+        </div>
+      )}
+
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10 lg:px-12">
           <a href="#home" className="text-sm uppercase tracking-[0.28em] text-neutral-300 transition hover:text-white">
             Mustafa Naweed
           </a>
+
           <div className="hidden items-center gap-2 md:flex">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace("#", "");
@@ -186,330 +202,218 @@ export default function MustafaNaweedPortfolio() {
       </nav>
 
       <main className="mx-auto max-w-7xl px-6 py-8 md:px-10 lg:px-12">
-        <RevealSection>
-          <section id="home" className="scroll-mt-24 grid gap-10 border-b border-white/10 pb-16 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-            <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-                Portfolio 2026
-              </p>
-              <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-7xl">
-                Mustafa Naweed
-              </h1>
-              <p className="mt-4 text-xl text-neutral-300 md:text-2xl">
-                Brand Designer & Art Director
-              </p>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-400 md:text-lg">
-                I design brand identities, packaging, illustration, and visual systems
-                that combine strategy, storytelling, and bold visual thinking.
-              </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-neutral-300 transition duration-300 hover:border-white/20 hover:bg-white/[0.06]"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+        <section id="home" className="scroll-mt-24 grid gap-10 border-b border-white/10 pb-16 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
 
-            <div className="flex flex-col gap-6 lg:items-end">
-              <img
-                src="/images/mustafa_profile.jpg"
-                alt="Mustafa Naweed"
-                className="aspect-square w-full max-w-sm rounded-[28px] border border-white/10 object-cover transition duration-500 hover:scale-[1.01]"
-              />
-            </div>
-          </section>
-        </RevealSection>
-
-        <RevealSection>
-          <section id="work" className="scroll-mt-24 border-b border-white/10 py-16">
+          <div>
             <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-              Selected Work
+              Portfolio 2026
             </p>
-            <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
-              A selection of branding, product, and illustration projects.
-            </h2>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {projects.map((project, index) => (
-                <a
-                  key={project.title}
-                  href={`#${slugify(project.title)}`}
-                  className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] transition duration-500 hover:-translate-y-1.5 hover:border-white/20"
-                  style={{ transitionDelay: `${index * 40}ms` }}
+            <h1 className="mt-4 text-5xl font-semibold tracking-tight md:text-7xl">
+              Mustafa Naweed
+            </h1>
+
+            <p className="mt-4 text-xl text-neutral-300 md:text-2xl">
+              Brand Designer & Art Director
+            </p>
+
+            <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-400 md:text-lg">
+              I design brand identities, packaging, illustration, and visual systems
+              that combine strategy, storytelling, and bold visual thinking.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-neutral-300"
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <FadeInImage
-                      src={project.thumb}
-                      alt={project.title}
-                      className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent transition duration-500 group-hover:from-black/70" />
-                  </div>
-                  <div className="absolute bottom-0 left-0 p-6">
-                    <h3 className="text-2xl font-medium text-white">{project.title}</h3>
-                    <p className="mt-1 text-sm text-neutral-300">{project.category}</p>
-                  </div>
-                </a>
+                  {skill}
+                </span>
               ))}
             </div>
-          </section>
-        </RevealSection>
+          </div>
 
-        <RevealSection>
-          <section id="about" className="scroll-mt-24 border-b border-white/10 py-16">
-            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-              <div>
-                <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-                  About
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
-                  Visual design with strategy at the core.
-                </h2>
-              </div>
-              <div className="space-y-5 text-base leading-7 text-neutral-300">
-                <p>
-                  I am a designer and art director with a background in visual communication,
-                  branding, and game design. My work moves across identity systems, packaging,
-                  digital campaigns, interface concepts, and illustration.
-                </p>
-                <p>
-                  I currently lead creative work at Forge Fusion Studios while continuing to
-                  develop independent concept projects that combine storytelling, visual systems,
-                  and world-building.
-                </p>
-              </div>
-            </div>
-          </section>
-        </RevealSection>
+          <div className="flex flex-col gap-6 lg:items-end">
+            <img
+              src="/images/mustafa_profile.jpg"
+              alt="Mustafa Naweed"
+              className="aspect-square w-full max-w-sm rounded-[28px] border border-white/10 object-cover"
+            />
+          </div>
+        </section>
 
-        <RevealSection>
-          <section className="border-b border-white/10 py-16">
-            <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-              Experience & Education
-            </p>
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
-              <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]">
-                <h3 className="text-xl font-medium">Experience</h3>
-                <div className="mt-5 space-y-5 text-neutral-300">
-                  <div>
-                    <p className="font-medium text-white">Owner & Art Director</p>
-                    <p className="text-sm text-neutral-400">Forge Fusion Studios · 2021 – Present</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Freelance Graphic & UI/UX Designer</p>
-                    <p className="text-sm text-neutral-400">Independent · 2015 – Present</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Senior Graphic Designer</p>
-                    <p className="text-sm text-neutral-400">IVYLAB Tech · 2019 – 2021</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Graphic Designer</p>
-                    <p className="text-sm text-neutral-400">Creative Junction · 2017 – 2019</p>
-                  </div>
+        <section id="work" className="scroll-mt-24 border-b border-white/10 py-16">
+
+          <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
+            Selected Work
+          </p>
+
+          <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
+            A selection of branding, product, and illustration projects.
+          </h2>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+            {projects.map((project) => (
+
+              <a
+                key={project.title}
+                href={`#${slugify(project.title)}`}
+                className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] transition hover:-translate-y-1 hover:border-white/20"
+              >
+
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={project.thumb}
+                    alt={project.title}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                 </div>
-              </div>
 
-              <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]">
-                <h3 className="text-xl font-medium">Education</h3>
-                <div className="mt-5 space-y-5 text-neutral-300">
-                  <div>
-                    <p className="font-medium text-white">M.A. in Game Design</p>
-                    <p className="text-sm text-neutral-400">Bahçeşehir University · 2021 – 2023</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">B.F.A. in Visual Communication Design</p>
-                    <p className="text-sm text-neutral-400">Beaconhouse National University · 2012 – 2016</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Diploma in Illustration</p>
-                    <p className="text-sm text-neutral-400">Florence Institute of Design International · 2021</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white">Diploma in Graphic Design</p>
-                    <p className="text-sm text-neutral-400">Florence Institute of Design International · 2021</p>
-                  </div>
+                <div className="absolute bottom-0 left-0 p-6">
+                  <h3 className="text-2xl font-medium text-white">{project.title}</h3>
+                  <p className="mt-1 text-sm text-neutral-300">{project.category}</p>
                 </div>
-              </div>
-            </div>
-          </section>
-        </RevealSection>
+
+              </a>
+
+            ))}
+
+          </div>
+        </section>
 
         {projects.map((project) => (
-          <RevealSection key={project.title}>
-            <section
-              id={slugify(project.title)}
-              className="scroll-mt-24 border-b border-white/10 py-16"
-            >
-              <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-                    Case Study
-                  </p>
-                  <h2 className="mt-3 text-3xl font-semibold md:text-5xl">{project.title}</h2>
-                  <p className="mt-3 text-base text-neutral-400 md:text-lg">{project.category}</p>
-                  <p className="mt-5 max-w-lg text-sm leading-7 text-neutral-300 md:text-base">
-                    {project.intro}
-                  </p>
-                </div>
-                <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03]">
-                  <FadeInImage
-                    src={project.visuals[0]}
-                    alt={`${project.title} hero`}
-                    className="h-full w-full object-cover transition duration-700 hover:scale-[1.02]"
-                  />
-                </div>
+
+          <section
+            key={project.title}
+            id={slugify(project.title)}
+            className="scroll-mt-24 border-b border-white/10 py-16"
+          >
+
+            <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+
+              <div>
+                <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
+                  Case Study
+                </p>
+
+                <h2 className="mt-3 text-3xl font-semibold md:text-5xl">
+                  {project.title}
+                </h2>
+
+                <p className="mt-3 text-base text-neutral-400 md:text-lg">
+                  {project.category}
+                </p>
+
+                <p className="mt-5 max-w-lg text-sm leading-7 text-neutral-300 md:text-base">
+                  {project.intro}
+                </p>
               </div>
 
-              <div className="mt-8 grid gap-6 md:grid-cols-2">
-                {project.visuals.slice(1).map((image, index) => (
-                  <div
-                    key={`${project.title}-${index}`}
-                    className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03]"
-                  >
-                    <FadeInImage
-                      src={image}
-                      alt={`${project.title} visual ${index + 2}`}
-                      className="h-full w-full object-cover transition duration-700 hover:scale-[1.02]"
-                    />
-                  </div>
-                ))}
+              <div
+                onClick={() => setLightboxImage(project.visuals[0])}
+                className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] cursor-zoom-in"
+              >
+                <img
+                  src={project.visuals[0]}
+                  alt={`${project.title} hero`}
+                  className="h-full w-full object-cover"
+                />
               </div>
-            </section>
-          </RevealSection>
-        ))}
 
-        <RevealSection>
-          <section id="contact" className="scroll-mt-24 py-16">
-            <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
-              Contact
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
-              Let’s Work Together
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-300">
-              Available for branding, creative direction, and design collaborations.
-              For inquiries or project discussions, feel free to reach out.
-            </p>
+            </div>
 
             <div className="mt-8 grid gap-6 md:grid-cols-2">
-              <a
-                href="mailto:mustafanaweed.mn@gmail.com"
-                className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-              >
-                <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">Email</p>
-                <p className="mt-2 text-lg text-white">mustafanaweed.mn@gmail.com</p>
-              </a>
 
-              <a
-                href="https://www.forgefusionstudios.com"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-              >
-                <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">Website</p>
-                <p className="mt-2 text-lg text-white">forgefusionstudios.com</p>
-              </a>
+              {project.visuals.slice(1).map((image, index) => (
 
-              <a
-                href="https://www.linkedin.com/in/mustafa-naweed"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-              >
-                <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">LinkedIn</p>
-                <p className="mt-2 text-lg text-white">Mustafa Naweed</p>
-              </a>
+                <div
+                  key={`${project.title}-${index}`}
+                  onClick={() => setLightboxImage(image)}
+                  className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] cursor-zoom-in"
+                >
 
-              <a
-                href="/files/Mustafa_Naweed_CV_2026.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-              >
-                <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">CV</p>
-                <p className="mt-2 text-lg text-white">Download Resume</p>
-              </a>
+                  <img
+                    src={image}
+                    alt={`${project.title} visual ${index + 2}`}
+                    className="h-full w-full object-cover"
+                  />
+
+                </div>
+
+              ))}
+
             </div>
 
-            <div className="mt-12 border-t border-white/10 pt-6 text-sm text-neutral-500">
-              © 2026 Mustafa Naweed · Owner & Art Director — Forge Fusion Studios
-            </div>
           </section>
-        </RevealSection>
+
+        ))}
+
+        <section id="contact" className="scroll-mt-24 py-16">
+
+          <p className="text-sm uppercase tracking-[0.35em] text-neutral-400">
+            Contact
+          </p>
+
+          <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
+            Let’s Work Together
+          </h2>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+
+            <a
+              href="mailto:mustafanaweed.mn@gmail.com"
+              className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6"
+            >
+              <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">Email</p>
+              <p className="mt-2 text-lg text-white">mustafanaweed.mn@gmail.com</p>
+            </a>
+
+            <a
+              href="https://www.forgefusionstudios.com"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6"
+            >
+              <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">Website</p>
+              <p className="mt-2 text-lg text-white">forgefusionstudios.com</p>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mustafa-naweed"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6"
+            >
+              <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">LinkedIn</p>
+              <p className="mt-2 text-lg text-white">Mustafa Naweed</p>
+            </a>
+
+            <a
+              href="/files/Mustafa_Naweed_CV_2026.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-[24px] border border-white/10 bg-white/[0.03] p-6"
+            >
+              <p className="text-sm uppercase tracking-[0.2em] text-neutral-400">CV</p>
+              <p className="mt-2 text-lg text-white">Download Resume</p>
+            </a>
+
+          </div>
+
+          <div className="mt-12 border-t border-white/10 pt-6 text-sm text-neutral-500">
+            © 2026 Mustafa Naweed · Owner & Art Director — Forge Fusion Studios
+          </div>
+
+        </section>
+
       </main>
+
     </div>
-  );
-}
-
-function RevealSection({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(node);
-        }
-      },
-      { threshold: 0.12 }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`transform transition-all duration-700 ease-out ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-      }`}
-    >
-      {children}
-    </div>
-  );
-}
-
-function FadeInImage({
-  src,
-  alt,
-  className,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-}) {
-  const [loaded, setLoaded] = useState(false);
-  const imgRef = useRef<HTMLImageElement | null>(null);
-
-  useEffect(() => {
-    const img = imgRef.current;
-    if (img?.complete) {
-      setLoaded(true);
-    }
-  }, [src]);
-
-  return (
-    <img
-      ref={imgRef}
-      src={src}
-      alt={alt}
-      onLoad={() => setLoaded(true)}
-      className={`${className ?? ""} transition-opacity duration-700 ${
-        loaded ? "opacity-100" : "opacity-0"
-      }`}
-    />
   );
 }
 
